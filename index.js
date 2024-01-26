@@ -1,4 +1,6 @@
 const express=require('express');
+const dotenv=require('dotenv')
+dotenv.config();
 const cookieParser=require('cookie-parser')
 const cors=require('cors')
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -40,7 +42,7 @@ app.get("/",(req,res)=>{
 app.use('/auth',auth);
 app.use('/notes',notes);
 
-app.listen(8080,async()=>{
+app.listen(process.env.port,async()=>{
     try {
         console.log("server start at 3000");
         connection;
