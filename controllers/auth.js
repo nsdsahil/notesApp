@@ -5,6 +5,7 @@ dotenv.config();
 const app=express.Router();
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
+const UserModel=require('../models/register');
 const RegisterModel=require('../models/register');
 const auth=require('../middlewares/auth.middleware');
 const BlacklistTokenModel = require('../models/blacklistToken');

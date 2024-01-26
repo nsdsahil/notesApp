@@ -15,7 +15,7 @@ const app=express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:['https://addnotesapp2024.cyclic.app',"https://notesapp-rosy.vercel.app"],
+    origin:["https://notesapp-rosy.vercel.app"],
     credentials:true
 }));
 
