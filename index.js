@@ -19,8 +19,6 @@ app.use(cors({
     credentials:true
 }));
 
-
-
 //swagger docs
 const options = {
     definition: {
@@ -42,10 +40,12 @@ app.get("/",(req,res)=>{
 app.use('/auth',auth);
 app.use('/notes',notes);
 
+
+
 app.listen(process.env.port,async()=>{
     try {
         console.log("server start at 3000");
-        connection;
+        await connection;
         console.log("connected to db");
     } catch (error) {
         console.log(error);
