@@ -27,7 +27,7 @@ app.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	console.log(req.body);
 	try {
-		const user = await RegisterModel.findOne({ email });
+		const user = await UserModel.findOne({ email });
 		console.log(user);
 		if (user) {
 			bcrypt.compare(password, user.password, async (err, result) => {
