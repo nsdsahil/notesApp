@@ -6,7 +6,7 @@ const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const connection = require("./db");
+const connectDB= require("./db");
 const auth = require("./controllers/auth");
 const notes = require("./controllers/notes");
 const app = express();
@@ -44,7 +44,7 @@ app.use("/notes", notes);
 app.listen(process.env.port, async () => {
 	try {
 		console.log("server start at 8080");
-		await connection;
+		await connectDB();
 		console.log("connected to db");
 	} catch (error) {
 		console.log(error);
