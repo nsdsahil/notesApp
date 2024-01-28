@@ -1,12 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors");
 dotenv.config();
 const app = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/register");
-const RegisterModel = require("../models/register");
 const auth = require("../middlewares/auth.middleware");
 const BlacklistTokenModel = require("../models/blacklistToken");
 
@@ -79,8 +77,12 @@ app.post("/register", async (req, res) => {
         console.log("hashing started"); // Moved inside the try block
         const user = new UserModel({ name, email, password: hashpassword, gender });
         console.log(user);
-        await user.save();
-        res.status(200).send({ msg: "user registered plz login" });
+		await user.save().then(() => {
+			res.status(200).send({ msg: "user registered" });
+		}).catch((err) => {
+			res.status(400).send({ err: err.message });
+		})
+        
     } catch (err) {
         console.error("Error while registering user:", err);
         res.status(400).send({ err: err.message });

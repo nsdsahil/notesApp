@@ -135,9 +135,13 @@ router.post("/add", auth, async (req, res) => {
 	const { email, title, content } = req.body;
 	console.log(req.body);
 	try {
-		const data = await NotesModel.create({ email, id: id, title, content });
-		await data.save();
-		res.send({ message: "added successfully", data: data });
+		const data = new NotesModel({ email, id: id, title, content });
+		await data.save().then(() => {
+			res.send({ message: "added successfully", data: data });
+		}).catch((err) => {
+			res.send({ err: err.message });
+		})
+		
 	} catch (error) {
 		res.send({ err: error, message: error.message });
 	}
@@ -151,7 +155,6 @@ router.patch("/patch/:id", auth, async (req, res) => {
    console.log(reqId, id)
 		if (reqId === id) {
 			const data = await NotesModel.findByIdAndUpdate(id, req.body);
-		
 			res.send({ message: "updated successfully", data: data });
 		}
 	} catch (error) {
