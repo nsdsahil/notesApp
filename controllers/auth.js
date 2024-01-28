@@ -72,25 +72,21 @@ app.post("/login", async (req, res) => {
 	}
 });
 app.post("/register", async (req, res) => {
-	const { name, email, password, gender } = req.body;
-	console.log(name, email, password, gender);
-	try {
-		const hashpassword = await bcrypt.hash(password, 5)
-			console.log("hashing started");
-			if (!hashpassword) {
-				res.send("err while hashing the password");
-			} else {
-				const user = new UserModel({ name, email, password: hashpassword, gender });
-				console.log(user);
-				await user.save();
-				res.status(200).send({ msg: "user registered plz login" });
-			}
-	
-		
-	} catch (err) {
-		res.status(400).send({ err: err });
-	}
+    const { name, email, password, gender } = req.body;
+    console.log(name, email, password, gender);
+    try {
+        const hashpassword = await bcrypt.hash(password, 5);
+        console.log("hashing started"); // Moved inside the try block
+        const user = new UserModel({ name, email, password: hashpassword, gender });
+        console.log(user);
+        await user.save();
+        res.status(200).send({ msg: "user registered plz login" });
+    } catch (err) {
+        console.error("Error while registering user:", err);
+        res.status(400).send({ err: err.message });
+    }
 });
+
 app.get("/logout", auth, async (req, res) => {
 	const token = req.cookies.token;
 	const refreshToken = req.cookies.refreshToken;
