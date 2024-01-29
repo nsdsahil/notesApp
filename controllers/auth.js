@@ -70,12 +70,12 @@ app.post("/login", async (req, res) => {
 	}
 });
 app.post("/register", async (req, res) => {
-    const { name, email, password, gender } = req.body;
+    const { name, email, password,dob, gender } = req.body;
     console.log(name, email, password, gender);
     try {
         const hashpassword = await bcrypt.hash(password, 5);
         console.log("hashing started"); // Moved inside the try block
-        const user = new UserModel({ name, email, password: hashpassword, gender });
+        const user = new UserModel({ name, email,dob, password: hashpassword, gender });
         console.log(user);
 		await user.save().then(() => {
 			res.status(200).send({ msg: "user registered" });
