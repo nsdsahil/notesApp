@@ -124,8 +124,14 @@ router.get("/", auth, async (req, res) => {
 router.delete("/delete/:id", auth, async (req, res) => {
 	try {
 		const id = req.params.id;
-		const data = await NotesModel.findByIdAndDelete(id);
+		const reqId = req.payload.id;
+		const data = await NotesModel.findById(reqId);
+		console.log(data.id, id);
+		if (data.id == id) {
+			const data = await NotesModel.findByIdAndDelete(id);
 		res.send({ message: "deleted successfully", data: data });
+		}
+		
 	} catch (error) {
 		res.send({ err: error, message: error.message });
 	}
