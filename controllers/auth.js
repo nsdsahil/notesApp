@@ -50,13 +50,13 @@ app.post("/login", async (req, res) => {
 					res.cookie("refreshToken", refreshToken, {
 						httpOnly: true,
 						secure: true,
-						sameSite: "none",
+						sameSite: "none"
 					});
 	
 					res.cookie("token", token, {
 						httpOnly: true,
 						sameSite: "none",
-						secure: true,
+						secure: true
 					});
 
 					res.send({ msg: "login succesful", token: token });
