@@ -154,7 +154,7 @@ router.patch("/patch/:id", auth, async (req, res) => {
 	const reqId = req.params.id;
    console.log(reqId, id)
 		if (reqId === id) {
-			const data = await NotesModel.findOneAndUpdate(reqId, req.body);
+			const data = await NotesModel.findByIdAndUpdate(reqId, req.body);
 			res.send({ message: "updated successfully", data: data });
 		}
 	} catch (error) {
