@@ -21,10 +21,10 @@ const auth = require("../middlewares/auth.middleware");
  *           description: The title of the note
  *         content:
  *            type: string
- *            description: The content of the note 
- * 
- *          
- *    
+ *            description: The content of the note
+ *
+ *
+ *
  */
 
 /**
@@ -35,7 +35,7 @@ const auth = require("../middlewares/auth.middleware");
  */
 
 /**
- * @swagger	
+ * @swagger
  * /notes:
  *  get:
  *      description: get all notes
@@ -48,7 +48,7 @@ const auth = require("../middlewares/auth.middleware");
  *                   type: array
  *                   items:
  *                       $ref: '#/components/schemas/Notes'
- *      
+ *
  */
 // /**
 //  * @swagger
@@ -56,7 +56,7 @@ const auth = require("../middlewares/auth.middleware");
 //  *  delete:
 //  *      description: delete a note
 //  *      tags: [Notes]
-//  *      
+//  *
 //  */
 
 /**
@@ -112,7 +112,7 @@ const auth = require("../middlewares/auth.middleware");
  *            description: bad request error
  */
 
-router.get("/",auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
 	try {
 		const data = await NotesModel.find();
 		console.log(data);
@@ -131,31 +131,33 @@ router.delete("/delete/:id", auth, async (req, res) => {
 	}
 });
 router.post("/add", auth, async (req, res) => {
-	const id = req.payload.id; 
+	const id = req.payload.id;
 	const { email, title, content } = req.body;
 	console.log(req.body);
 	try {
 		const data = new NotesModel({ email, id: id, title, content });
-		await data.save().then(() => {
-			res.send({ message: "added successfully", data: data });
-		}).catch((err) => {
-			res.send({ err: err.message });
-		})
-		
+		await data
+			.save()
+			.then(() => {
+				res.send({ message: "added successfully", data: data });
+			})
+			.catch((err) => {
+				res.send({ err: err.message });
+			});
 	} catch (error) {
 		res.send({ err: error, message: error.message });
 	}
 });
 
 router.patch("/patch/:id", auth, async (req, res) => {
-	
 	try {
-      const id = req.payload.id;
-	const reqId = req.params.id;
-	const data = await NotesModel.findById(reqId);
-  console.log(data.id, id)
-		if (data.id == id) { 
-			const data = await NotesModel.findByIdAndUpdate(reqId,req.body);
+		const id = req.payload.id;
+		const reqId = req.params.id;
+
+		const data = await NotesModel.findById(reqId);
+		console.log(data.id, id);
+		if (data.id == id) {
+			const data = await NotesModel.findByIdAndUpdate(reqId, req.body);
 			res.send({ message: "updated successfully", data: data });
 		}
 	} catch (error) {
