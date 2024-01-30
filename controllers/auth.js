@@ -49,12 +49,14 @@ app.post("/login", async (req, res) => {
 					
 					res.cookie("refreshToken", refreshToken, {
 						httpOnly: true,
+						expires:1000*30,
 						secure: true,
 						sameSite: "none"
 					});
 	
 					res.cookie("token", token, {
 						httpOnly: true,
+						expires:1000*20,
 						sameSite: "none",
 						secure: true
 					});
