@@ -36,27 +36,25 @@ app.post("/login", async (req, res) => {
 						{ course: "backend", id: user._id },
 						process.env.secret_key,
 						{
-							expiresIn: "1h",
+							expiresIn: 20,
 						}
 					);
 
 					const refreshToken = jwt.sign(
 						{ course: "backend", id: user._id },
 						process.env.secret_key,
-						{ expiresIn: "7h" }
+						{ expiresIn: 30 }
 					);
 
 					
 					res.cookie("refreshToken", refreshToken, {
 						httpOnly: true,
-						expires:1000*30,
 						secure: true,
 						sameSite: "none"
 					});
 	
 					res.cookie("token", token, {
-						httpOnly: true,
-						expires:1000*20,
+						httpOnly: true,	
 						sameSite: "none",
 						secure: true
 					});
